@@ -1,0 +1,16 @@
+general:
+  use_uvloop: true
+  logging:
+    console:
+      _type: console
+      level: WARN
+
+llms:
+   azure_openai_llm:
+      _type: azure_openai
+      model_name: gpt-4o
+      azure_deployment: gpt-4o
+
+workflow:
+  _type: paper2code
+  parameter: default_value
