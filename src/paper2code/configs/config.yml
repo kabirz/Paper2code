@@ -10,7 +10,12 @@ llms:
       _type: azure_openai
       model_name: gpt-4o
       azure_deployment: gpt-4o
+   zhipu_llm:
+      _type: openai
+      base_url: https://open.bigmodel.cn/api/paas/v4
+      model_name: glm-4.5
+   
 
 workflow:
   _type: paper2code
-  parameter: default_value
+  llm_name: azure_openai_llm
