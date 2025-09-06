@@ -1,3 +1,5 @@
+from nat.data_models.function import FunctionBaseConfig
+from pydantic import Field
 
 SYSTEM_MSG_TEMPLATE = """You are an expert researcher and strategic planner with a deep understanding of experimental design and reproducibility in scientific research. 
 You will receive a research paper in {paper_format} format. 
@@ -28,7 +30,7 @@ PLAN_MSG_TEMPLATE = """## Paper
 ## Instruction
 The response should give us a strong roadmap, making it easier to write the code later."""
 
-file_list_msg = """Your goal is to create a concise, usable, and complete software system design for reproducing the paper's method. Use appropriate open-source libraries and keep the overall architecture simple.
+FILE_LIST_MSG = """Your goal is to create a concise, usable, and complete software system design for reproducing the paper's method. Use appropriate open-source libraries and keep the overall architecture simple.
              
 Based on the plan for reproducing the paper’s main method, please design a concise, usable, and complete software system. 
 Keep the architecture simple and make effective use of open-source libraries.
@@ -65,7 +67,7 @@ Format: output wrapped inside [CONTENT][/CONTENT] like the format example, nothi
 ## Action
 Follow the instructions for the nodes, generate the output, and ensure it follows the format example."""
 
-task_list_msg = """Your goal is break down tasks according to PRD/technical design, generate a task list, and analyze task dependencies. 
+TASK_LIST_MSG = """Your goal is break down tasks according to PRD/technical design, generate a task list, and analyze task dependencies. 
 You will break down tasks, analyze dependencies.
              
 You outline a clear PRD/technical design for reproducing the paper’s method and experiments. 
@@ -141,7 +143,7 @@ Format: output wrapped inside [CONTENT][/CONTENT] like the format example, nothi
 Follow the node instructions above, generate your output accordingly, and ensure it follows the given format example."""
 
 # config
-config_msg = """You write elegant, modular, and maintainable code. Adhere to Google-style guidelines.
+CONFIG_MSG = """You write elegant, modular, and maintainable code. Adhere to Google-style guidelines.
 
 Based on the paper, plan, design specified previously, follow the "Format Example" and generate the code. 
 Extract the training details from the above paper (e.g., learning rate, batch size, epochs, etc.), follow the "Format example" and generate the code. 
@@ -169,6 +171,17 @@ training:
 ## Code: config.yaml
 
 """
+class Paper2CodeFunctionConfig(FunctionBaseConfig, name="paper2code"):
+    """
+    NAT function template. Please update the description.
+    """
+    # Add your custom configuration parameters here
+    llm_name: str = Field(description="Name of the language model to use for text generation")
+    file_list_msg: str = Field(default=FILE_LIST_MSG, description="prompt message for file list")
+    task_list_msg: str = Field(default=TASK_LIST_MSG, description="prompt message for task list")
+    config_msg: str = Field(default=CONFIG_MSG, description="config message for paper")
+    output_directory: str = Field(default="outputs", description="Directory to store output files")
+
 
 planning_docs = "planning.md"
 planning_file = "file_list.txt"

@@ -4,17 +4,15 @@
 # Import any tools which need to be automatically registered here
 import logging
 
-from pydantic import Field
-
 from nat.builder.builder import Builder
 from nat.builder.function_info import FunctionInfo
 from nat.cli.register_workflow import register_function
-from nat.data_models.function import FunctionBaseConfig
 from nat.builder.framework_enum import LLMFrameworkEnum
 from langchain_core.output_parsers import StrOutputParser
 from .paper_planning import plan_paper
 from .paper_analyzing import analyze_paper
 from .paper_coding import code_paper
+from .config import Paper2CodeFunctionConfig
 from .tex2json import parse_tex_section
 import pathlib
 import os
@@ -22,15 +20,6 @@ import sys
 import json
 
 logger = logging.getLogger(__name__)
-
-
-class Paper2CodeFunctionConfig(FunctionBaseConfig, name="paper2code"):
-    """
-    NAT function template. Please update the description.
-    """
-    # Add your custom configuration parameters here
-    llm_name: str = Field(description="Name of the language model to use for text generation")
-    output_directory: str = Field(default="outputs", description="Directory to store output files")
 
 
 @register_function(config_type=Paper2CodeFunctionConfig, framework_wrappers=[LLMFrameworkEnum.LANGCHAIN])
@@ -50,7 +39,7 @@ async def paper2code_function(config: Paper2CodeFunctionConfig, builder: Builder
             else:
                 paper_content = json.load(f)
         # Process the input_message and generate output
-        await plan_paper(paper_content, chain, config.output_directory)
+        await plan_paper(paper_content, chain, config)
         await analyze_paper(paper_content, chain, config.output_directory) 
         return await code_paper(paper_content, chain, config.output_directory)
 

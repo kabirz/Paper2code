@@ -19,3 +19,4 @@ llms:
 workflow:
   _type: paper2code
   llm_name: azure_openai_llm
+  output_directory: aa

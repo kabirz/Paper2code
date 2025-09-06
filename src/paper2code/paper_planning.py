@@ -4,22 +4,21 @@ from typing import Any
 import re
 import logging
 from .config import (
-    SYSTEM_MSG_TEMPLATE, PLAN_MSG_TEMPLATE, file_list_msg, task_list_msg, config_msg,
-    planning_docs, planning_config, planning_file, planning_task
+    SYSTEM_MSG_TEMPLATE, PLAN_MSG_TEMPLATE,
+    planning_docs, planning_config, planning_file, planning_task, Paper2CodeFunctionConfig
 )
 
 logger = logging.getLogger(__name__)
 
-async def plan_paper(paper_content: str, chain: Any, output_dir: str):
-    res = ''
+async def plan_paper(paper_content: str, chain: Any, config: Paper2CodeFunctionConfig):
     system_msg_template = SystemMessagePromptTemplate.from_template(SYSTEM_MSG_TEMPLATE)
     plan_msg_template = HumanMessagePromptTemplate.from_template(PLAN_MSG_TEMPLATE)
     msgs = [system_msg_template.format(paper_format='json')]    
     steps = [
         {planning_docs: plan_msg_template.format(paper_content=paper_content)}, 
-        {planning_file: HumanMessage(file_list_msg)},
-        {planning_task: HumanMessage(task_list_msg)},
-        {planning_config: HumanMessage(config_msg)},
+        {planning_file: HumanMessage(config.file_list_msg)},
+        {planning_task: HumanMessage(config.task_list_msg)},
+        {planning_config: HumanMessage(config.config_msg)},
     ]
 
     titles = ['Overall plan', 'Architecture design', 'Logic design', 'Configuration file generation']
@@ -39,7 +38,7 @@ async def plan_paper(paper_content: str, chain: Any, output_dir: str):
                     res = json_match.group(1)
                 
 
-            with open(f'{output_dir}/{name}', 'w') as f:
+            with open(f'{config.output_directory}/{name}', 'w') as f:
                 f.write(res)
             msgs.append(AIMessage(content=res))
 

@@ -132,6 +132,9 @@ workflow:
   _type: paper2code
   llm_name: azure_openai_llm
   output_directory: outputs
+  # file_list_msg:  prompt for file list
+  # task_list_msg:  prompt for task list
+  # config_msg:  config prompt
 ```
 
 ### Input Formats
