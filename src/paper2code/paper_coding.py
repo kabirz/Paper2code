@@ -144,7 +144,7 @@ async def code_paper(paper_content: str, llm: Any, output_dir: str) -> str:
     
     
         # extract code save 
-        py_match = re.search(r"```python\s*#\s*([^\n]+)\n([\s\S]*?)\n```", res, re.DOTALL)
+        py_match = re.search(r"```python\n(.*?)\n```", res, re.DOTALL)
         if py_match:
             code = py_match.group(1)
             if len(code) == 0:

@@ -143,6 +143,54 @@ The system supports two input formats:
 
 ## 📊 Output Structure
 
+output log:
+
+```
+> nat run --config_file src/paper2code/configs/config.yml --input paper.tex
+2025-09-06 17:00:49,968 - nat.cli.commands.start - INFO - Starting NAT from config file: 'src/paper2code/configs/config.yml'
+
+Configuration Summary:
+--------------------
+Workflow Type: paper2code
+Number of Functions: 0
+Number of LLMs: 2
+Number of Embedders: 0
+Number of Memory: 0
+Number of Object Stores: 0
+Number of Retrievers: 0
+Number of TTC Strategies: 0
+Number of Authentication Providers: 0
+
+2025-09-06 17:00:50,443 - paper2code.paper_planning - INFO - Start planning.
+2025-09-06 17:00:50,443 - paper2code.paper_planning - INFO - [PLANNING] (1/4): Overall plan.
+2025-09-06 17:01:16,203 - paper2code.paper_planning - INFO - [PLANNING] (2/4): Architecture design.
+2025-09-06 17:01:25,494 - paper2code.paper_planning - INFO - [PLANNING] (3/4): Logic design.
+2025-09-06 17:01:33,035 - paper2code.paper_planning - INFO - [PLANNING] (4/4): Configuration file generation.
+2025-09-06 17:01:38,397 - paper2code.paper_planning - INFO - ✅ Paper planning finished.
+2025-09-06 17:01:38,397 - paper2code.paper_analyzing - INFO - Start analyzing.
+2025-09-06 17:01:38,397 - paper2code.paper_analyzing - INFO - [ANALYSIS] (1/6): utils.py.
+2025-09-06 17:01:59,252 - paper2code.paper_analyzing - INFO - [ANALYSIS] (2/6): dataset_loader.py.
+2025-09-06 17:02:21,041 - paper2code.paper_analyzing - INFO - [ANALYSIS] (3/6): model.py.
+2025-09-06 17:02:46,550 - paper2code.paper_analyzing - INFO - [ANALYSIS] (4/6): trainer.py.
+2025-09-06 17:03:09,380 - paper2code.paper_analyzing - INFO - [ANALYSIS] (5/6): evaluation.py.
+2025-09-06 17:03:32,340 - paper2code.paper_analyzing - INFO - [ANALYSIS] (6/6): main.py.
+2025-09-06 17:03:52,493 - paper2code.paper_analyzing - INFO - ✅ Paper analyzing finished.
+2025-09-06 17:03:52,493 - paper2code.paper_coding - INFO - Start coding.
+2025-09-06 17:03:52,494 - paper2code.paper_coding - INFO - [CODING](1/6): outputs/code/utils.py
+2025-09-06 17:04:11,233 - paper2code.paper_coding - INFO - [CODING](2/6): outputs/code/dataset_loader.py
+2025-09-06 17:04:33,644 - paper2code.paper_coding - INFO - [CODING](3/6): outputs/code/model.py
+2025-09-06 17:04:54,248 - paper2code.paper_coding - INFO - [CODING](4/6): outputs/code/trainer.py
+2025-09-06 17:05:09,493 - paper2code.paper_coding - INFO - [CODING](5/6): outputs/code/evaluation.py
+2025-09-06 17:05:25,770 - paper2code.paper_coding - INFO - [CODING](6/6): outputs/code/main.py
+2025-09-06 17:05:40,277 - paper2code.paper_coding - INFO - ✅ Paper coding finished.
+2025-09-06 17:05:40,278 - nat.front_ends.console.console_front_end_plugin - INFO - 
+--------------------------------------------------
+Workflow Result:
+['Source code generated Successfully in path: outputs/code.']
+--------------------------------------------------
+2025-09-06 17:05:40,278 - paper2code.register - INFO - Cleaning up paper2code workflow.
+```
+
 The system generates organized output in the specified directory:
 
 ```

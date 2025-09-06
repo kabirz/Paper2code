@@ -73,14 +73,13 @@ async def analyze_paper(paper_content: str, llm: Any, output_dir: str):
     logic_analysis_dict = {}
     logger.info('Start analyzing.')
     with open(f'{output_dir}/{planning_task}', "r") as f:
-        logger.info(f"file:{output_dir}/{planning_task}")
         task_json = json.load(f)
         todo_list = task_json.get("Task list", [])
         logic_analysis = task_json.get("Logic Analysis", [])
         for desc in logic_analysis:
             logic_analysis_dict[desc[0]] = desc[1]
     for i, todo_file_name in enumerate(todo_list):
-        logger.info(f'[ANALYSIS] ({i+1}/{len(todo_list)}): {output_dir}/{todo_file_name}.')
+        logger.info(f'[ANALYSIS] ({i+1}/{len(todo_list)}): {todo_file_name}.')
         msgs = [analysis_system_msg_template.format(paper_format='json')]
         if todo_file_name == "config.yaml":
             continue
