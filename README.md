@@ -2,6 +2,8 @@
 
 A sophisticated system that automatically converts research papers into executable code using Large Language Models (LLMs). This system implements a three-stage pipeline (Plan → Analyze → Code) to reproduce research methodologies described in academic papers.
 
+[中文](README_cn.md)
+
 ## 🚀 Features
 
 - **Three-Stage Pipeline**: Plan → Analyze → Code methodology for comprehensive code generation
